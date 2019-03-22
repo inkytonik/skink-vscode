@@ -1,0 +1,132 @@
+{
+    "name": "skink",
+    "displayName": "skink",
+    "description": "Skink Verification Tool",
+    "version": "0.0.1",
+    "publisher": "inkytonik",
+    "engines": {
+        "vscode": "^1.30.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onLanguage:c"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Skink",
+            "properties": {
+
+                "skink.frontend": {
+                    "type": "string",
+                    "enum": [
+                        "C",
+                        "LLVM"
+                    ],
+                    "default": "C",
+                    "description": "The frontend to use to process files before verification."
+                },
+                "skink.optLevel": {
+                    "type": "number",
+                    "default": 2,
+                    "description": "The optimisation level to use when processing C files."
+                },
+                "skink.numericMode": {
+                    "type": "string",
+                    "enum": [
+                        "bit",
+                        "math"
+                    ],
+                    "default": "bit",
+                    "description": "The numeric mode to use during verification."
+                },
+                "skink.solver": {
+                    "type": "string",
+                    "enum": [
+                        "boolector",
+                        "cvc4",
+                        "mathsat",
+                        "smtinterpol",
+                        "yices",
+                        "yicesnonincr",
+                        "z3"
+                    ],
+                    "default": "mathsat",
+                    "description": "The SMT solver to use."
+                },
+                "skink.java": {
+                    "type": "string",
+                    "default": "/usr/bin/java",
+                    "description": "The full path to the Java runtime."
+                },
+                "skink.jar": {
+                    "type": "string",
+                    "default": "/some/path/skink.jar",
+                    "description": "The full path of the Skink assembly jar."
+                },
+                "skink.fshellw2tpath": {
+                    "type": "string",
+                    "default": "./fshell-w2t",
+                    "description": "The path to the fshellw2t violation witness validator directory."
+                },
+                "skink.checktruewitnesspath": {
+                    "type": "string",
+                    "default": "./scripts",
+                    "description": "The path to the check-true-witness.sh correctness witness validator directory."
+                }
+            }
+        },
+        "commands": [
+            {
+                "category": "Skink",
+                "command": "monto.selectLinkedEditors",
+                "title": "Focus Product Editors"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "monto.selectLinkedEditors",
+                "key": "ctrl+alt+p",
+                "mac": "cmd+alt+p",
+                "when": "editorTextFocus && editorLangId == 'c'"
+            }
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "skink",
+                    "title": "Skink",
+                    "icon": "resources/skink-activitybar.png"
+                }
+            ]
+        },
+        "views": {
+            "skink": [
+                {
+                    "id": "skink-products",
+                    "name": "Products"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^5.2.1"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.26",
+        "tslint": "^5.8.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
