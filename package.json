@@ -82,13 +82,13 @@
         "commands": [
             {
                 "category": "Skink",
-                "command": "monto.selectLinkedEditors",
+                "command": "skink.selectLinkedEditors",
                 "title": "Focus Product Editors"
             }
         ],
         "keybindings": [
             {
-                "command": "monto.selectLinkedEditors",
+                "command": "skink.selectLinkedEditors",
                 "key": "ctrl+alt+p",
                 "mac": "cmd+alt+p",
                 "when": "editorTextFocus && editorLangId == 'c'"
