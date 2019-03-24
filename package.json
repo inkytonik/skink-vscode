@@ -76,6 +76,11 @@
                     "type": "string",
                     "default": "./scripts",
                     "description": "The path to the check-true-witness.sh correctness witness validator directory."
+                },
+                "skink.verifiedFunctions": {
+                    "type": "array",
+                    "default": [],
+                    "description": "A map from file uris to function names to be verified."
                 }
             }
         },
@@ -84,6 +89,11 @@
                 "category": "Skink",
                 "command": "skink.selectLinkedEditors",
                 "title": "Focus Product Editors"
+            },
+            {
+                "category": "Skink",
+                "command": "skink.chooseVerifiedFunction",
+                "title": "Choose function to be verified"
             }
         ],
         "keybindings": [

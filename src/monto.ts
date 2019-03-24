@@ -1,8 +1,9 @@
-import { commands, ExtensionContext, EventEmitter, ProviderResult, Range,
-  Selection, TextDocumentContentProvider, TextEditor,
-  TextEditorRevealType, TextEditorSelectionChangeEvent, TreeDataProvider,
-  TreeItem, TreeItemCollapsibleState, Uri, ViewColumn, WebviewPanel,
-  workspace, window }
+import { commands, DocumentSymbol, ExtensionContext, EventEmitter,
+  ProviderResult, QuickPickItem, Range, Selection, SymbolKind,
+  TextDocumentContentProvider, TextEditor, TextEditorRevealType,
+  TextEditorSelectionChangeEvent, TreeDataProvider, TreeItem,
+  TreeItemCollapsibleState, Uri, ViewColumn, WebviewPanel,
+  workspace, window, ConfigurationTarget }
   from 'vscode';
 import { NotificationType } from 'vscode-jsonrpc';
 import { LanguageClient, DidChangeConfigurationNotification } from
@@ -359,6 +360,13 @@ export namespace Monto {
         );
 
         context.subscriptions.push(
+            commands.registerCommand(`${name}.chooseVerifiedFunction`,
+                () =>
+                    chooseVerifiedFunction(name, context, client)
+            )
+        );
+
+        context.subscriptions.push(
             workspace.registerTextDocumentContentProvider(montoScheme, montoProductProvider)
         );
 
@@ -375,12 +383,78 @@ export namespace Monto {
     function sendConfigurationToServer(client: LanguageClient, name: string) {
         client.sendNotification(
             DidChangeConfigurationNotification.type.method,
-            { settings: workspace.getConfiguration(name) }
+            {
+                settings: workspace.getConfiguration(name),
+            }
         );
     }
 
     function isMontoEditor(editor: TextEditor): Boolean {
         return editor.document.uri.scheme === 'monto';
+    }
+
+    // Verified function
+
+    function chooseVerifiedFunction(name: string, context: ExtensionContext, client: LanguageClient) {
+        let editor = window.activeTextEditor;
+        if (editor !== undefined) {
+            let uri = editor.document.uri;
+            if (uri !== undefined) {
+                commands.executeCommand<DocumentSymbol[]>('vscode.executeDocumentSymbolProvider', uri).then(
+                    symbols => {
+                        if (symbols !== undefined) {
+                            let functions = symbols.filter(
+                                symbol =>
+                                    (symbol.kind === SymbolKind.Function) &&
+                                    (symbol.name.indexOf("(declaration") === -1)
+                            );
+                            let items = functions.map(
+                                func =>
+                                    <QuickPickItem> {
+                                        label: func.name,
+                                        description: func.detail
+                                    }
+                            );
+                            window.showQuickPick(items,
+                                {
+                                    canPickMany: false,
+                                    placeHolder: "Function to verify"
+                                }
+                            ).then(
+                                value => {
+                                    if (value !== undefined) {
+                                        setVerifiedFunction(name, client, uri.toString(), value.label);
+                                    }
+                                }
+                            );
+                        }
+                    }
+                );
+            }
+        }
+    }
+
+    interface FileNameMapEntry {
+        uri: string;
+        name: string;
+    }
+
+    function setVerifiedFunction(name: string, client: LanguageClient, uri: string, label: string) {
+        let parenIndex = label.indexOf("(");
+        if (parenIndex === -1) {
+            parenIndex = label.length;
+        }
+        let functionName = label.substring(0, parenIndex);
+
+        let settings = workspace.getConfiguration(name);
+        let map = settings.get<FileNameMapEntry[]>("verifiedFunctions", []);
+        let entry = map.find(entry => entry.uri === uri);
+        if (entry === undefined) {
+            map.push({ uri: uri, name: functionName});
+        } else {
+            entry.name = functionName;
+        }
+        settings.update("verifiedFunctions", map, ConfigurationTarget.Global);
     }
 
     // Source to target linking
