@@ -67,12 +67,12 @@
                     "default": "/some/path/skink.jar",
                     "description": "The full path of the Skink assembly jar."
                 },
-                "skink.fshellw2tpath": {
+                "skink.fshellw2tPath": {
                     "type": "string",
                     "default": "./fshell-w2t",
                     "description": "The path to the fshellw2t violation witness validator directory."
                 },
-                "skink.checktruewitnesspath": {
+                "skink.checkTrueWitnessPath": {
                     "type": "string",
                     "default": "./scripts",
                     "description": "The path to the check-true-witness.sh correctness witness validator directory."
