@@ -352,7 +352,7 @@ export namespace Monto {
         );
 
         context.subscriptions.push(
-            commands.registerCommand("monto.selectLinkedEditors",
+            commands.registerCommand(`${name}.selectLinkedEditors`,
                 () =>
                     selectLinkedTargetRanges()
             )
