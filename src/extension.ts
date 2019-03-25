@@ -8,21 +8,21 @@ let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
 
-    let settings = workspace.getConfiguration("skink");
-    let logConfigPath = context.extensionPath + "/resources";
+    const settings = workspace.getConfiguration("skink");
+    const logConfigPath = context.extensionPath + "/resources";
 
-    let java = settings.get("java", "/usr/bin/java");
-    let jar = settings.get("jar");
-    let classpath = `${jar}:${logConfigPath}`;
-    let main = "au.edu.mq.comp.skink.Main";
+    const java = settings.get("java", "/usr/bin/java");
+    const jar = settings.get("jar");
+    const classpath = `${jar}:${logConfigPath}`;
+    const main = "au.edu.mq.comp.skink.Main";
 
-    let args = [
+    const args = [
         "-classpath", classpath,
         main,
         "--server"
     ];
 
-    let serverOptions: ServerOptions = {
+    const serverOptions: ServerOptions = {
         run: {
             command: java,
             args: args,
@@ -37,7 +37,7 @@ export function activate(context: ExtensionContext) {
         }
     };
 
-    let clientOptions: LanguageClientOptions = {
+    const clientOptions: LanguageClientOptions = {
         documentSelector: [
             {
                 scheme: 'file',

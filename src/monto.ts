@@ -70,7 +70,7 @@ export namespace Monto {
     }
 
     function trimExtension(filename : string): string {
-        let index = filename.lastIndexOf('.');
+        const index = filename.lastIndexOf('.');
         if (index === -1) {
             return filename;
         } else {
@@ -90,20 +90,20 @@ export namespace Monto {
     }
 
     function insert(parent : Node, keys: string[], product: Product) {
-        let key = keys[0];
-        let oldNode = parent.children.find(n => n.name === key);
+        const key = keys[0];
+        const oldNode = parent.children.find(n => n.name === key);
         if (keys.length === 1) {
-            let newNode = makeNode(parent, key, product);
+            const newNode = makeNode(parent, key, product);
             if (oldNode === undefined) {
                 pushNode(parent, newNode);
             } else {
-                let oldIndex = parent.children.indexOf(oldNode);
+                const oldIndex = parent.children.indexOf(oldNode);
                 parent.children[oldIndex] = newNode;
             }
         } else {
-            let newKeys = keys.slice(1);
+            const newKeys = keys.slice(1);
             if (oldNode === undefined) {
-                let newNode = makeNode(parent, key, undefined);
+                const newNode = makeNode(parent, key, undefined);
                 pushNode(parent, newNode);
                 insert(newNode, newKeys, product);
             } else {
@@ -115,20 +115,20 @@ export namespace Monto {
     // Product data
 
     // Map Monto uri strings to latest version of their products
-    let products = new Map<string, Product>();
+    const products = new Map<string, Product>();
 
     // Tree of product data
     let productTree : Node = rootNode();
 
     // Map all uri strings to the view column in which they are displayed
-    let columns = new Map<string, ViewColumn>();
+    const columns = new Map<string, ViewColumn>();
 
     // Product operations
 
-    let productSeparator = "|";
+    const productSeparator = "|";
 
     function clearProducts(filename : string) {
-        let uri = Uri.file(filename).toString();
+        const uri = Uri.file(filename).toString();
         productTree = rootNode();
         products.forEach((product, key) => {
             if (product.uri === uri) {
@@ -149,9 +149,9 @@ export namespace Monto {
     }
 
     function saveProduct(product: Product) {
-        let uri = productToTargetUri(product);
-        let key = uri.toString();
-        let prevProduct = products.get(key);
+        const uri = productToTargetUri(product);
+        const key = uri.toString();
+        const prevProduct = products.get(key);
         if (product.append && prevProduct !== undefined) {
             product.content = prevProduct.content + product.content;
         }
@@ -175,9 +175,9 @@ export namespace Monto {
     }
 
     function getProduct(uri: Uri): Product {
-        let p = products.get(uri.toString());
+        const p = products.get(uri.toString());
         if (p === undefined) {
-            let dummyRange = {
+            const dummyRange = {
                 source: { start: 0, end: 0 },
                 targets: [{ start: 0, end: 0 }]
             };
@@ -197,7 +197,7 @@ export namespace Monto {
     }
 
     function productToName(product : Product): string {
-        let path = Uri.parse(product.uri).path;
+        const path = Uri.parse(product.uri).path;
         return `${path}${productSeparator}${product.name}.${product.language}`;
     }
 
@@ -206,7 +206,7 @@ export namespace Monto {
     }
 
     function targetUriToSourceUri(uri: Uri): Uri {
-        let path = uri.path.substring(0, uri.path.indexOf(productSeparator));
+        const path = uri.path.substring(0, uri.path.indexOf(productSeparator));
         return Uri.parse(`file:${path}`);
     }
 
@@ -218,7 +218,7 @@ export namespace Monto {
         onDidChangeEmitter = new EventEmitter<Uri>();
 
         provideTextDocumentContent(uri: Uri): string {
-            let product = products.get(uri.toString());
+            const product = products.get(uri.toString());
             if (product === undefined) {
                 // Note: an empty string doesn't work here. It's as if
                 // the content doesn't change...
@@ -252,9 +252,9 @@ export namespace Monto {
         }
 
         getTreeItem(node: Node): TreeItem {
-            let index = node.name.lastIndexOf(`${sep}`);
-            let shortName = (index === -1) ? node.name : node.name.slice(index + 1);
-            let item = new TreeItem(shortName);
+            const index = node.name.lastIndexOf(`${sep}`);
+            const shortName = (index === -1) ? node.name : node.name.slice(index + 1);
+            const item = new TreeItem(shortName);
             item.tooltip = node.fullName;
             if (shortName === "Products") {
                 item.collapsibleState = TreeItemCollapsibleState.Expanded;
@@ -310,7 +310,7 @@ export namespace Monto {
         });
 
         workspace.onDidChangeTextDocument(change => {
-            let settings = workspace.getConfiguration(name);
+            const settings = workspace.getConfiguration(name);
             if (settings.get(`${name}.updateOnChange`)) {
                 clearProducts(change.document.fileName);
             }
@@ -396,19 +396,19 @@ export namespace Monto {
     // Verified function
 
     function chooseVerifiedFunction(name: string, context: ExtensionContext, client: LanguageClient) {
-        let editor = window.activeTextEditor;
+        const editor = window.activeTextEditor;
         if (editor !== undefined) {
-            let uri = editor.document.uri;
+            const uri = editor.document.uri;
             if (uri !== undefined) {
                 commands.executeCommand<DocumentSymbol[]>('vscode.executeDocumentSymbolProvider', uri).then(
                     symbols => {
                         if (symbols !== undefined) {
-                            let functions = symbols.filter(
+                            const functions = symbols.filter(
                                 symbol =>
                                     (symbol.kind === SymbolKind.Function) &&
                                     (symbol.name.indexOf("(declaration") === -1)
                             );
-                            let items = functions.map(
+                            const items = functions.map(
                                 func =>
                                     <QuickPickItem> {
                                         label: func.name,
@@ -440,15 +440,12 @@ export namespace Monto {
     }
 
     function setVerifiedFunction(name: string, client: LanguageClient, uri: string, label: string) {
-        let parenIndex = label.indexOf("(");
-        if (parenIndex === -1) {
-            parenIndex = label.length;
-        }
-        let functionName = label.substring(0, parenIndex);
+        const parenIndex = label.indexOf("(");
+        const functionName = (parenIndex === -1) ? label : label.substring(0, parenIndex);
 
-        let settings = workspace.getConfiguration(name);
-        let map = settings.get<FileNameMapEntry[]>("verifiedFunctions", []);
-        let entry = map.find(entry => entry.uri === uri);
+        const settings = workspace.getConfiguration(name);
+        const map = settings.get<FileNameMapEntry[]>("verifiedFunctions", []);
+        const entry = map.find(entry => entry.uri === uri);
         if (entry === undefined) {
             map.push({ uri: uri, name: functionName});
         } else {
@@ -460,18 +457,18 @@ export namespace Monto {
     // Source to target linking
 
     function selectLinkedTargetRanges() {
-        let editor = window.activeTextEditor;
+        const editor = window.activeTextEditor;
         if (editor !== undefined) {
-            let sourceEditor = editor;
-            let sourceUri = sourceEditor.document.uri.toString();
-            let sourceSelections = sourceEditor.selections;
+            const sourceEditor = editor;
+            const sourceUri = sourceEditor.document.uri.toString();
+            const sourceSelections = sourceEditor.selections;
             window.visibleTextEditors.forEach(targetEditor => {
                 if (isMontoEditor(targetEditor)) {
-                    let targetUri = targetEditor.document.uri;
-                    let targetSourceUri = targetUriToSourceUri(targetUri);
+                    const targetUri = targetEditor.document.uri;
+                    const targetSourceUri = targetUriToSourceUri(targetUri);
                     if (targetSourceUri.toString() === sourceUri) {
-                        let product = getProduct(targetUri);
-                        let targetSelections =
+                        const product = getProduct(targetUri);
+                        const targetSelections =
                             flatten(sourceSelections.map(sourceSelection => {
                                 return getSelections(product, sourceEditor, sourceSelection, targetEditor, true);
                             }));
@@ -488,13 +485,13 @@ export namespace Monto {
     // Target to source linking
 
     function selectLinkedSourceRanges(change: TextEditorSelectionChangeEvent) {
-        let targetEditor = change.textEditor;
-        let targetUri = targetEditor.document.uri;
-        let sourceUri = targetUriToSourceUri(targetUri);
+        const targetEditor = change.textEditor;
+        const targetUri = targetEditor.document.uri;
+        const sourceUri = targetUriToSourceUri(targetUri);
         openInEditor(sourceUri, false).then(sourceEditor => {
-            let product = getProduct(targetUri);
+            const product = getProduct(targetUri);
             if (product.handleSelectionChange) {
-                let sourceSelections =
+                const sourceSelections =
                     flatten(change.selections.map(targetSelection =>
                         getSelections(product, targetEditor, targetSelection, sourceEditor, false)
                     ));
@@ -514,8 +511,8 @@ export namespace Monto {
     }
 
     function getSelections(product : Product, fromEditor: TextEditor, fromSelection: Selection, toEditor: TextEditor, forward: boolean): Range[] {
-        let fromOffset = fromEditor.document.offsetAt(fromSelection.start);
-        let entry = findContainingRangeEntry(product, fromOffset, forward);
+        const fromOffset = fromEditor.document.offsetAt(fromSelection.start);
+        const entry = findContainingRangeEntry(product, fromOffset, forward);
         if (entry === undefined) {
             return [new Range(0, 0, 0, 0)];
         } else {
@@ -524,7 +521,7 @@ export namespace Monto {
     }
 
     function findContainingRangeEntry(product: Product, offset: number, forward: boolean): RangeEntry| undefined {
-        let map = forward ? product.rangeMap : product.rangeMapRev;
+        const map = forward ? product.rangeMap : product.rangeMapRev;
         return map.find(entry =>
             (entry.source.start <= offset) && (offset < entry.source.end)
         );
@@ -537,16 +534,16 @@ export namespace Monto {
     }
 
     function targetToSelection(editor: TextEditor, target: OffsetRange): Range {
-        let s = editor.document.positionAt(target.start);
-        let f = editor.document.positionAt(target.end);
+        const s = editor.document.positionAt(target.start);
+        const f = editor.document.positionAt(target.end);
         return new Range(s, f);
     }
 
     function viewColumn(uri: Uri, isTarget: Boolean): ViewColumn {
-        let key = uri.toString();
-        let column = columns.get(key);
+        const key = uri.toString();
+        const column = columns.get(key);
         if (column === undefined) {
-            let original = isTarget ? ViewColumn.Two : ViewColumn.One;
+            const original = isTarget ? ViewColumn.Two : ViewColumn.One;
             columns.set(key, original);
             return original;
         } else {
@@ -586,7 +583,7 @@ export namespace Monto {
         resource: Uri;
     }
 
-    let openSVGWebViews : SVGWebViewPanel[] = [];
+    const openSVGWebViews : SVGWebViewPanel[] = [];
 
     function getOpenSVGWebView(uri: Uri): SVGWebViewPanel | undefined {
         return openSVGWebViews.find(panel => panel.resource.fsPath === uri.fsPath);
@@ -600,7 +597,7 @@ export namespace Monto {
     }
 
     function openSVGInWebView(context: ExtensionContext, product: Product, fullName : string, isTarget: boolean) {
-        let uri = productToTargetUri(product);
+        const uri = productToTargetUri(product);
         let view = getOpenSVGWebView(uri);
         if (view === undefined) {
             view = {
@@ -623,15 +620,15 @@ export namespace Monto {
     }
 
     function updateSVGInWebView(product: Product) {
-        let uri = productToTargetUri(product);
-        let view = getOpenSVGWebView(uri);
+        const uri = productToTargetUri(product);
+        const view = getOpenSVGWebView(uri);
         if (view !== undefined) {
             updateSVGWebViewContent(view, product);
         }
     }
 
     function updateSVGWebViewContent(view : SVGWebViewPanel, product : Product) {
-        let html =
+        const html =
             `<div>
                 <script
                     type="text/javascript"
