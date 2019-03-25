@@ -1,6 +1,6 @@
-# Skink Language Server
+# Skink Program Verification Tool
 
-Visual Studio Code Language Server Client for Skink software verification tool.
+Visual Studio Code Language Server support for the Skink program verification tool.
 
 Anthony M. Sloane
 Programming Languages and Verification Research Group
