@@ -3,8 +3,9 @@
 Visual Studio Code Language Server support for the Skink program verification tool.
 
 Anthony M. Sloane
-Programming Languages and Verification Research Group
-Department of Computing
+
+Programming Languages and Verification Research Group,
+Department of Computing,
 Macquarie University
 
 ## Prerequisites
