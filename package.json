@@ -6,16 +6,16 @@
     "version": "0.1.0",
     "publisher": "inkytonik",
     "author": {
-        "name" : "Anthony M. Sloane",
-        "email" : "inkytonik@gmail.com",
-        "url" : "https://bitbucket.org/inkytonik/"
+        "name": "Anthony M. Sloane",
+        "email": "inkytonik@gmail.com",
+        "url": "https://bitbucket.org/inkytonik/"
     },
     "license": "MPL-2.0",
     "homepage": "https://bitbucket.org/inkytonik/skink-vscode",
     "bugs": "https://bitbucket.org/inkytonik/skink-vscode/issues",
     "repository": {
-        "type" : "git",
-        "url" : "https://bitbucket.org/inkytonik/skink-vscode"
+        "type": "git",
+        "url": "https://bitbucket.org/inkytonik/skink-vscode"
     },
     "engines": {
         "vscode": "^1.30.0"
@@ -23,7 +23,12 @@
     "categories": [
         "Other"
     ],
-    "keywords": ["automatic", "verification", "C", "Skink"],
+    "keywords": [
+        "automatic",
+        "verification",
+        "C",
+        "Skink"
+    ],
     "activationEvents": [
         "onLanguage:c"
     ],
