@@ -2,14 +2,28 @@
     "name": "skink",
     "displayName": "skink",
     "description": "Skink Verification Tool",
-    "version": "0.0.1",
+    "icon": "resources/skink-activitybar.png",
+    "version": "0.1.0",
     "publisher": "inkytonik",
+    "author": {
+        "name" : "Anthony M. Sloane",
+        "email" : "inkytonik@gmail.com",
+        "url" : "https://bitbucket.org/inkytonik/"
+    },
+    "license": "MPL-2.0",
+    "homepage": "https://bitbucket.org/inkytonik/skink-vscode",
+    "bugs": "https://bitbucket.org/inkytonik/skink-vscode/issues",
+    "repository": {
+        "type" : "git",
+        "url" : "https://bitbucket.org/inkytonik/skink-vscode"
+    },
     "engines": {
         "vscode": "^1.30.0"
     },
     "categories": [
         "Other"
     ],
+    "keywords": ["automatic", "verification", "C", "Skink"],
     "activationEvents": [
         "onLanguage:c"
     ],
@@ -19,7 +33,6 @@
             "type": "object",
             "title": "Skink",
             "properties": {
-
                 "skink.frontend": {
                     "type": "string",
                     "enum": [
@@ -93,7 +106,7 @@
             {
                 "category": "Skink",
                 "command": "skink.chooseVerifiedFunction",
-                "title": "Choose function to be verified"
+                "title": "Choose Function to be Verified"
             }
         ],
         "keybindings": [
