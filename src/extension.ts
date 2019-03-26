@@ -11,8 +11,8 @@ export function activate(context: ExtensionContext) {
     const settings = workspace.getConfiguration("skink");
     const logConfigPath = context.extensionPath + "/resources";
 
-    const java = settings.get("java", "/usr/bin/java");
-    const jar = settings.get("jar");
+    const java = settings.get("java", "/usr/bin/java").trim();
+    const jar = settings.get("jar", "skink.jar").trim();
     const classpath = `${jar}:${logConfigPath}`;
     const main = "au.edu.mq.comp.skink.Main";
 
