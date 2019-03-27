@@ -514,7 +514,7 @@ export namespace Monto {
         const fromOffset = fromEditor.document.offsetAt(fromSelection.start);
         const entry = findContainingRangeEntry(product, fromOffset, forward);
         if (entry === undefined) {
-            return [new Range(0, 0, 0, 0)];
+            return [];
         } else {
             return targetsToSelections(toEditor, entry.targets);
         }
