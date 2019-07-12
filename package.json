@@ -112,6 +112,11 @@
                 "category": "Skink",
                 "command": "skink.chooseVerifiedFunction",
                 "title": "Choose Function to be Verified"
+            },
+            {
+                "category": "Skink",
+                "command": "skink.restartServer",
+                "title": "Restart server"
             }
         ],
         "keybindings": [

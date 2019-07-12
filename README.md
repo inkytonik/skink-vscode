@@ -48,6 +48,8 @@ These other settings can be adjusted as desired:
 ## Features
 
 The Skink language server starts automatically when you open a C file.
+If you want to restart with a new version of Skink, use the 'Skink: Restart server' command.
+
 When a C file is opened or saved, Skink will be run to verify that file.
 Diagnostics will indicate the results of the verification.
 

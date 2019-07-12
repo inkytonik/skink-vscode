@@ -1,7 +1,7 @@
 'use strict';
 
-import { ExtensionContext, workspace } from 'vscode';
-import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient';
+import { commands, ExtensionContext, workspace, window } from 'vscode';
+import { ExitNotification, LanguageClient, LanguageClientOptions, ServerOptions, ShutdownRequest } from 'vscode-languageclient';
 import { Monto } from './monto';
 
 let client: LanguageClient;
@@ -55,6 +55,18 @@ export function activate(context: ExtensionContext) {
     );
 
     Monto.setup("skink", context, client);
+
+    context.subscriptions.push(
+        commands.registerCommand(
+            'skink.restartServer',
+            () => {
+                window.showInformationMessage('Skink is restarting');
+                client.sendRequest(ShutdownRequest.type).then(() => {
+                    client.sendNotification(ExitNotification.type);
+                });
+            }
+        )
+    );
 
     context.subscriptions.push(client.start());
 }

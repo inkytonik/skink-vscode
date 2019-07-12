@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.3.0]
+
+- Add Restart server command.
+
 ## [0.2.0]
 
 - Trim settings before use to avoid bad paths.
