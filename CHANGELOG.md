@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.4.0]
+
+- Support multiple SMT solvers via the solvers setting.
+
 ## [0.3.0]
 
 - Add Restart server command.

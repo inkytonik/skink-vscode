@@ -61,19 +61,10 @@
                     "default": "bit",
                     "description": "The numeric mode to use during verification."
                 },
-                "skink.solver": {
+                "skink.solvers": {
                     "type": "string",
-                    "enum": [
-                        "boolector",
-                        "cvc4",
-                        "mathsat",
-                        "smtinterpol",
-                        "yices",
-                        "yicesnonincr",
-                        "z3"
-                    ],
-                    "default": "mathsat",
-                    "description": "The SMT solver to use."
+                    "default": "mathsat,z3",
+                    "description": "Comma-separated list of names of the SMT solvers to use."
                 },
                 "skink.java": {
                     "type": "string",
