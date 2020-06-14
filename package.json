@@ -8,14 +8,14 @@
     "author": {
         "name": "Anthony M. Sloane",
         "email": "inkytonik@gmail.com",
-        "url": "https://bitbucket.org/inkytonik/"
+        "url": "https://github.com/inkytonik/"
     },
     "license": "MPL-2.0",
-    "homepage": "https://bitbucket.org/inkytonik/skink-vscode",
-    "bugs": "https://bitbucket.org/inkytonik/skink-vscode/issues",
+    "homepage": "https://github.com/inkytonik/skink-vscode",
+    "bugs": "https://github.com/inkytonik/skink-vscode/issues",
     "repository": {
         "type": "git",
-        "url": "https://bitbucket.org/inkytonik/skink-vscode"
+        "url": "https://github.com/inkytonik/skink-vscode"
     },
     "engines": {
         "vscode": "^1.30.0"
