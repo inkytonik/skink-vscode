@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.5.0]
+
+- Move project to GitHub
+- Some security fixes
+
 ## [0.4.0]
 
 - Support multiple SMT solvers via the solvers setting.
