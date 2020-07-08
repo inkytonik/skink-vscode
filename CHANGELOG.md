@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.7.0]
+
+- Remove unused test code
+
 ## [0.6.0]
 
 - Dependency updates
