@@ -1,156 +1,158 @@
 {
-    "name": "skink",
-    "displayName": "skink",
-    "description": "Skink Verification Tool",
-    "icon": "resources/skink-activitybar.png",
-    "version": "0.5.0",
-    "publisher": "inkytonik",
-    "author": {
-        "name": "Anthony M. Sloane",
-        "email": "inkytonik@gmail.com",
-        "url": "https://github.com/inkytonik/"
-    },
-    "license": "MPL-2.0",
-    "homepage": "https://github.com/inkytonik/skink-vscode",
-    "bugs": "https://github.com/inkytonik/skink-vscode/issues",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/inkytonik/skink-vscode"
-    },
-    "engines": {
-        "vscode": "^1.30.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "keywords": [
-        "automatic",
-        "verification",
-        "C",
-        "Skink"
-    ],
-    "activationEvents": [
-        "onLanguage:c"
-    ],
-    "main": "./out/extension",
-    "contributes": {
-        "configuration": {
-            "type": "object",
-            "title": "Skink",
-            "properties": {
-                "skink.frontend": {
-                    "type": "string",
-                    "enum": [
-                        "C",
-                        "LLVM"
-                    ],
-                    "default": "C",
-                    "description": "The frontend to use to process files before verification."
-                },
-                "skink.optLevel": {
-                    "type": "number",
-                    "default": 2,
-                    "description": "The optimisation level to use when processing C files."
-                },
-                "skink.numericMode": {
-                    "type": "string",
-                    "enum": [
-                        "bit",
-                        "math"
-                    ],
-                    "default": "bit",
-                    "description": "The numeric mode to use during verification."
-                },
-                "skink.solvers": {
-                    "type": "string",
-                    "default": "mathsat,z3",
-                    "description": "Comma-separated list of names of the SMT solvers to use."
-                },
-                "skink.java": {
-                    "type": "string",
-                    "default": "/usr/bin/java",
-                    "description": "The full path to the Java runtime."
-                },
-                "skink.jar": {
-                    "type": "string",
-                    "default": "/some/path/skink.jar",
-                    "description": "The full path of the Skink assembly jar."
-                },
-                "skink.fshellw2tPath": {
-                    "type": "string",
-                    "default": "./fshell-w2t",
-                    "description": "The path to the fshellw2t violation witness validator directory."
-                },
-                "skink.checkTrueWitnessPath": {
-                    "type": "string",
-                    "default": "./scripts",
-                    "description": "The path to the check-true-witness.sh correctness witness validator directory."
-                },
-                "skink.verifiedFunctions": {
-                    "type": "array",
-                    "default": [],
-                    "description": "A map from file uris to function names to be verified."
-                }
-            }
+  "name": "skink",
+  "displayName": "skink",
+  "description": "Skink Verification Tool",
+  "icon": "resources/skink-activitybar.png",
+  "version": "0.5.0",
+  "publisher": "inkytonik",
+  "author": {
+    "name": "Anthony M. Sloane",
+    "email": "inkytonik@gmail.com",
+    "url": "https://github.com/inkytonik/"
+  },
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/inkytonik/skink-vscode",
+  "bugs": "https://github.com/inkytonik/skink-vscode/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inkytonik/skink-vscode"
+  },
+  "engines": {
+    "vscode": "^1.46.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "automatic",
+    "verification",
+    "C",
+    "Skink"
+  ],
+  "activationEvents": [
+    "onLanguage:c"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Skink",
+      "properties": {
+        "skink.frontend": {
+          "type": "string",
+          "enum": [
+            "C",
+            "LLVM"
+          ],
+          "default": "C",
+          "description": "The frontend to use to process files before verification."
         },
-        "commands": [
-            {
-                "category": "Skink",
-                "command": "skink.selectLinkedEditors",
-                "title": "Focus Product Editors"
-            },
-            {
-                "category": "Skink",
-                "command": "skink.chooseVerifiedFunction",
-                "title": "Choose Function to be Verified"
-            },
-            {
-                "category": "Skink",
-                "command": "skink.restartServer",
-                "title": "Restart server"
-            }
-        ],
-        "keybindings": [
-            {
-                "command": "skink.selectLinkedEditors",
-                "key": "ctrl+alt+p",
-                "mac": "cmd+alt+p",
-                "when": "editorTextFocus && editorLangId == 'c'"
-            }
-        ],
-        "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "skink",
-                    "title": "Skink",
-                    "icon": "resources/skink-activitybar.png"
-                }
-            ]
+        "skink.optLevel": {
+          "type": "number",
+          "default": 2,
+          "description": "The optimisation level to use when processing C files."
         },
-        "views": {
-            "skink": [
-                {
-                    "id": "skink-products",
-                    "name": "Products"
-                }
-            ]
+        "skink.numericMode": {
+          "type": "string",
+          "enum": [
+            "bit",
+            "math"
+          ],
+          "default": "bit",
+          "description": "The numeric mode to use during verification."
+        },
+        "skink.solvers": {
+          "type": "string",
+          "default": "mathsat,z3",
+          "description": "Comma-separated list of names of the SMT solvers to use."
+        },
+        "skink.java": {
+          "type": "string",
+          "default": "/usr/bin/java",
+          "description": "The full path to the Java runtime."
+        },
+        "skink.jar": {
+          "type": "string",
+          "default": "/some/path/skink.jar",
+          "description": "The full path of the Skink assembly jar."
+        },
+        "skink.fshellw2tPath": {
+          "type": "string",
+          "default": "./fshell-w2t",
+          "description": "The path to the fshellw2t violation witness validator directory."
+        },
+        "skink.checkTrueWitnessPath": {
+          "type": "string",
+          "default": "./scripts",
+          "description": "The path to the check-true-witness.sh correctness witness validator directory."
+        },
+        "skink.verifiedFunctions": {
+          "type": "array",
+          "default": [],
+          "description": "A map from file uris to function names to be verified."
         }
+      }
     },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "commands": [
+      {
+        "category": "Skink",
+        "command": "skink.selectLinkedEditors",
+        "title": "Focus Product Editors"
+      },
+      {
+        "category": "Skink",
+        "command": "skink.chooseVerifiedFunction",
+        "title": "Choose Function to be Verified"
+      },
+      {
+        "category": "Skink",
+        "command": "skink.restartServer",
+        "title": "Restart server"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "skink.selectLinkedEditors",
+        "key": "ctrl+alt+p",
+        "mac": "cmd+alt+p",
+        "when": "editorTextFocus && editorLangId == 'c'"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "skink",
+          "title": "Skink",
+          "icon": "resources/skink-activitybar.png"
+        }
+      ]
     },
-    "dependencies": {
-        "vscode-languageclient": "^5.2.1"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.26",
-        "tslint": "^5.8.0",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+    "views": {
+      "skink": [
+        {
+          "id": "skink-products",
+          "name": "Products"
+        }
+      ]
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^5.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "tslint": "^5.8.0",
+    "vscode-test": "^1.3.0",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42",
+    "@types/vscode": "^1.46.0"
+  }
 }

@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.6.0]
+
+- Dependency updates
+
 ## [0.5.0]
 
 - Move project to GitHub
