@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.8.0]
+
+- Bump minimist from 1.2.5 to 1.2.6 (security alert)
+
 ## [0.7.0]
 
 - Remove unused test code
