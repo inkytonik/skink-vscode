@@ -3,7 +3,7 @@
   "displayName": "skink",
   "description": "Skink Verification Tool",
   "icon": "resources/skink-activitybar.png",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "publisher": "inkytonik",
   "author": {
     "name": "Anthony M. Sloane",
